@@ -34,7 +34,7 @@ pipeline {
                  remote.user = user
                  remote.identityFile = keyfile
                  // go to plugins manager and install in jenkins ssh-pipeline-steps
-                 sshScript remote: remote, script: "/ansible/prepare_ansible-server.sh"
+                 sshScript remote: remote, script: "ansible/prepare_ansible-server.sh"
                  sshCommand remote: remote, command: "ansible-playbook deploy-docker-with-roles.yaml"
                 }
                   
