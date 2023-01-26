@@ -1,14 +1,12 @@
- - name: Create a directory
-   file:
-     path: /home/aya/ansible/docker  
-     state: directory
-
+- name: Create a directory
+  file:
+    path: /home/aya/ansible/docker  
+    state: directory
 - name: copie docker-compose file
   copy:
     src: docker-compose.yaml
     dest: /home/aya/ansible/docker/docker-compose.yaml
     remote_src: yes
-
 - name: Docker login
   docker_login:
     registry_url: "{{docker_registry}}" 
