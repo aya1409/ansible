@@ -4,7 +4,7 @@
     state: directory
 - name: copie docker-compose file
   copy:
-    src: docker-compose.yaml
+    src: files/docker-compose.yaml
     dest: /home/aya/ansible/docker/docker-compose.yaml
     remote_src: yes
 - name: Docker login
