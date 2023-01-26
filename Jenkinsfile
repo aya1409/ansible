@@ -10,7 +10,7 @@ pipeline {
               script{
                  echo"coping all necessary files to ansible controle node"
                  sshagent(['ansible-server-key']){
-                    sh "scp -o StrictHostKeyChecking=no ansible/* root@${ANSIBLE_SERVER}:/root/ansible"
+                    sh "scp -o StrictHostKeyChecking=no ansible/* root@${ANSIBLE_SERVER}:/root/"
                 }
                 }
             }
