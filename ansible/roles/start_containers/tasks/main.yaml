@@ -6,7 +6,7 @@
   copy:
     src: docker-compose.yml
     dest: /home/aya/ansible/docker/docker-compose.yml
-    remote_src: yes
+    #remote_src: yes
 - name: Docker login
   docker_login:
     registry_url: "{{docker_registry}}" 
