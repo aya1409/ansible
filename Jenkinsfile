@@ -9,6 +9,7 @@ pipeline {
             steps {
               script{
                  echo"coping all necessary files to ansible controle node"
+                 // go to plugins manager in jenkins and add the plugin ssh agent
                  sshagent(['ansible-server-key']){
                     sh "scp -r -o StrictHostKeyChecking=no ansible/* root@${ANSIBLE_SERVER}:/root/"
                 }
@@ -32,6 +33,7 @@ pipeline {
                 {
                  remote.user = user
                  remote.identityFile = keyfile
+                 // go to plugins manager and install in jenkins ssh-pipeline-steps
                  sshScript remote: remote, script: "prepare_ansible-server.sh"
                  sshCommand remote: remote, command: "ansible-playbook deploy-docker-with-roles.yaml"
                 }
