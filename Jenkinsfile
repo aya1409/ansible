@@ -29,8 +29,10 @@ pipeline {
                 // w heka ye5ou deux variable el el private key li ani 9otlou 3oud samihouli keyfile
                 // w user li ani 9otlou samihouli user
                 // ramez howa ye5ou deux var w y7ot fehom les contenue mta3 les creden
-                 withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", keyFileVariable: 'keyfile', usernameVariable: 'user')])
+                 withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", keyFileVariable: "keyfile", usernameVariable: "user")])
                 {
+                    // don't forget to generate you ssh private key with this command and add it in authoriezd key 
+                    //ssh-keygen -p -f id_rsa -m pem -P "" -N "" 
                  remote.user = user
                  remote.identityFile = keyfile
                  // go to plugins manager and install in jenkins ssh-pipeline-steps
