@@ -18,8 +18,8 @@ pipeline {
             steps {
               script{
                  echo"calling ansible playbook file"
-                 def remote[:]
-                 remote.name = "ansible-server"
+                 def remote = [:]
+                 remote.name = "root"
                  remote.host = ANSIBLE_SERVER
                  remote.allowAnyHosts = true
                  sshScript remote: remote, scripts: "prepare_ansible-server.sh"
