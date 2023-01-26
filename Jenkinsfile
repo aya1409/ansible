@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        ANSIBLE_SERVER = "164.92.202.253"
+        ANSIBLE_SERVER = "138.68.66.94"
 
     }
     stages {
@@ -25,13 +25,13 @@ pipeline {
                  sshScript remote: remote, scripts: "prepare_ansible-server.sh"
                  sshCommand remote: remote, command: "ansible-playbook deploy-docker-with-roles.yaml"
 
-                 withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", KeyFileVariable: 'keyfile',usernameVariable: 'root')])
-                {
-                 remote.user = user
-                 remote.identityFile = keyfile
-                 sshScript remote: remote, scripts: "prepare_ansible-server.sh"
-                 sshCommand remote: remote, command: "ansible-playbook deploy-docker-linux.yaml"
-                }
+                //  withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", KeyFileVariable: 'keyfile',usernameVariable: 'root')])
+                // {
+                //  remote.user = user
+                //  remote.identityFile = keyfile
+                //  sshScript remote: remote, scripts: "prepare_ansible-server.sh"
+                //  sshCommand remote: remote, command: "ansible-playbook deploy-docker-linux.yaml"
+                // }
                   
             }
 
