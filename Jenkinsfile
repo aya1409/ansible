@@ -23,7 +23,7 @@ pipeline {
                  remote.name = "root"
                  remote.host = ANSIBLE_SERVER
                  remote.allowAnyHosts = true
-                 sshScript remote: remote, scripts: "prepare_ansible-server.sh"
+                 sshScript remote: remote, script: "prepare_ansible-server.sh"
                  sshCommand remote: remote, command: "ansible-playbook deploy-docker-with-roles.yaml"
 
                 //  withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", KeyFileVariable: 'keyfile',usernameVariable: 'root')])
