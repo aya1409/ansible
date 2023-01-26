@@ -1,0 +1,94 @@
+---
+- name: Install docker and docker-compose && python3
+  hosts: webserver
+  become: yes
+  gather_facts: False
+  tasks:
+   - name: Update package lists
+     apt:
+       update_cache: yes
+   - name: Install Docker packages
+     apt:
+       name: docker.io
+       state: present
+   - name: Install docker_compose
+     get_url:
+       url: https://github.com/docker/compose/releases/download/1.28.6/docker-compose-Linux-x86_64
+       dest: /root/
+       mode: +x
+   - name: Install pip3
+     apt:
+      name: python3-pip
+      state: present
+   - name: Install boto3 and and botocore
+     pip:
+       name:
+        - boto3
+        - botocore
+  
+
+- name: start docker
+  hosts: webserver
+  tasks:
+   - name: Start Docker service
+     service:
+       state: started
+       name: docker
+   - name: Install docker python module
+     pip: 
+       name: 
+        - docker
+        - docker-compose
+       state: present
+
+- name: Create new linux user
+  hosts: webserver
+  become: yes
+  tasks:
+   - name: Create linux user
+     user:
+       name: aya
+       groups: adm,docker
+       append: yes
+
+# - name: Test docker pull
+#   hosts: webserver
+#   tasks:
+#    - name: Pull redis
+#      docker_image: 
+#        name: redis
+#        source: pull
+- name: start docker container
+  hosts: webserver
+  become: yes
+  become_user: aya
+  vars_files:
+   - project-vars
+  # vars_prompt:
+  #  - name: docker_password
+  #    prompt: Enter password for docker registry
+  tasks:
+   - name: Create a directory
+     file:
+       path: /home/aya/ansible/docker  
+       state: directory
+   - name: copie docker-compose file
+     copy:
+       src: /home/aya/ansible/docker-compose.yaml
+       dest: /home/aya/ansible/docker/docker-compose.yaml
+       remote_src: yes
+   - name: Docker login
+     docker_login:
+       registry_url: https://index.docker.io/v1/ 
+       username: ayafathallah0 
+       password: "{{ docker_password }}"
+   - name: Start container from docker compose
+     docker_compose:
+       project_src: /home/aya/ansible/docker/
+       state: present # docker-compose up 
+      
+
+    
+
+
+ 

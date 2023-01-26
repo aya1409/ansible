@@ -1,0 +1,12 @@
+---
+plugin: aws_ec2
+regions: 
+ - eu-west-3
+filters:
+  tag:Name: dev* #only server how start with dev
+  instance-state-name: running   # the only running  service
+keyed_groups:
+ - key: tags # to make group for instance one for dev server and other for production servers 
+   prefix: tag
+ - key: instance_type 
+   prefix: instance_type

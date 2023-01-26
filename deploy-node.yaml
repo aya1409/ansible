@@ -1,0 +1,72 @@
+---
+- name: Install node and npm
+  hosts: webserver
+  tasks:
+   - name: Update apt repo and cache
+     apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+   - name: Install nodejs and npm
+     apt:
+      pkg:
+      - nodejs
+      - npm
+#lesson232 create new user
+- name: Create new linux user for node app
+  hosts: webserver
+  tasks: 
+   - name: Create linux user
+     user:
+       name: aya
+       comment: aya Admin
+       group: admin
+   #lesson 233 variables
+     register: user_creation_result
+   - debug: msg={{user_creation_result}}
+
+      
+#change all the paths /root/ ==> /home/aya
+        
+#lesson230/231
+- name: Depoy nodejs application
+  hosts: webserver
+  #become true
+  become: True
+  become_user: aya 
+ #variables lesson 233
+  vars_files:
+    - project-vars
+  tasks:
+  - name: Download Node.js
+    get_url:
+      url: https://nodejs.org/dist/v19.5.0/node-v19.5.0-linux-x64.tar.gz
+      dest: /home/aya/node-v19.5.0-linux-x64.tar.gz
+  - name: Create a directory
+    file:
+      path: /home/aya/package/app/node/
+      state: directory
+  - name: Copy nodejs folder to server
+    copy:
+      src: /home/aya/node-v19.5.0-linux-x64.tar.gz
+      dest: /home/aya/package/app/node/
+      remote_src: yes
+  - name: Unarchive file
+    unarchive:
+      src: "{{location}}/node-{{version}}-linux-x64.tar.gz"
+      dest: /home/aya/package/app/node/
+      remote_src: yes
+    register: user_creation_result #lesson 233
+  - debug: msg={{user_creation_result}} #lesson 233
+  - name: Install dependencies
+    npm:
+      path: /home/aya/package/
+  - name: Start the application
+    command: 
+      chdir: /home/aya/package/app
+      cmd: node serve
+    async: 1000
+    poll: 0
+  - name: CheckStatus
+    shell: ps aux | grep node
+    register: app_status
+  - debug: msg={{app_status.stdout_lines}}
+  
+

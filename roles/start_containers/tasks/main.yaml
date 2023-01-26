@@ -1,0 +1,21 @@
+ - name: Create a directory
+   file:
+     path: /home/aya/ansible/docker  
+     state: directory
+
+- name: copie docker-compose file
+  copy:
+    src: docker-compose.yaml
+    dest: /home/aya/ansible/docker/docker-compose.yaml
+    remote_src: yes
+
+- name: Docker login
+  docker_login:
+    registry_url: "{{docker_registry}}" 
+    username: "{{docker_username}}" 
+    password: "{{ docker_password }}"
+
+- name: Start container from docker compose
+  docker_compose:
+    project_src: /home/aya/ansible/docker/
+    state: present # docker-compose up 
