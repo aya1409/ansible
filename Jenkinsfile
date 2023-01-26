@@ -22,7 +22,7 @@ pipeline {
                  echo"calling ansible playbook file"
                  def remote = [:]
                  remote.name = "root"
-                 remote.host = ANSIBLE_SERVER
+                 remote.host = "138.68.66.94"
                  remote.allowAnyHosts = true
                  
                 // yemchi ll jenkins w ychouf l credential li 3andou id ansible-server-key li ani zedou el private key mta3 jenkins docker ece w fazzet 
