@@ -23,16 +23,18 @@ pipeline {
                  remote.name = "root"
                  remote.host = ANSIBLE_SERVER
                  remote.allowAnyHosts = true
+                 
+                // yemchi ll jenkins w ychouf l credential li 3andou id ansible-server-key li ani zedou el private key mta3 jenkins docker ece w fazzet 
+                // w heka ye5ou deux variable el el private key li ani 9otlou 3oud samihouli keyfile
+                // w user li ani 9otlou samihouli root
+                // ramez howa ye5ou deux var w y7ot fehom les contenue mta3 les creden
+                 withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", KeyFileVariable: 'keyfile',usernameVariable: 'root')])
+                {
+                 remote.user = root
+                 remote.identityFile = keyfile
                  sshScript remote: remote, script: "prepare_ansible-server.sh"
                  sshCommand remote: remote, command: "ansible-playbook deploy-docker-with-roles.yaml"
-
-                //  withCredentials([sshUserPrivateKey(credentialsId: "ansible-server-key", KeyFileVariable: 'keyfile',usernameVariable: 'root')])
-                // {
-                //  remote.user = user
-                //  remote.identityFile = keyfile
-                //  sshScript remote: remote, scripts: "prepare_ansible-server.sh"
-                //  sshCommand remote: remote, command: "ansible-playbook deploy-docker-linux.yaml"
-                // }
+                }
                   
             }
 
