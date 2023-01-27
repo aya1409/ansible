@@ -1,0 +1,74 @@
+ 224: 
+ansible all -i hosts -m ping
+vim hosts
+
+!wq
+
+226 : 
+create new droplet 
+ssh-keydcan -H 165.22.201.197 >>~/ssh/known_hosts
+cat ~/.ssh/id_rsa.pub
+ssh root@165.22.201.197
+ create new droplet with password 
+ssh-keyscan -H 165.22.201.197 >>~/ssh/known_hosts
+ssh root@188.166.30.219
+
+ssh-keygen
+
+1- create droplet 
+$ sudo apt update
+$ sudo apt install software-properties-common 
+$ sudo add-apt-repository --yes --update ppa:ansible/ansible 
+$ sudo apt install ansible
+install  ansible
+ssh-keygen and copie the pulic ssh /root/.ssh/id_rsa.pub
+2- create 2 émé droplet (mafihech ansible)
+go to authorized_keys  /root/.ssh/authorized_keys)
+ans past the public key 
+ps : el machine li feha ansible lezm ykoun 3andh accees ssh 3ala les machine li bech ye5dem 3lihom kol 
+3- create file hosts 
+create ansible.cfg 
+ test ping  ansible webserver -i hosts -m ping
+(lezmha tech3el bel a5ther) 
+ 
+227 
+ansible-playbook -i hosts my-playbook.yaml
+228:modules
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html
+
+229:collection
+ansible-galaxy collection list
+ansible-galaxy install <collection-name> 
+230:
+upackage
+scr : user.....
+ansible-playbook -i hosts deploy-node.yaml
+231 
+debug 
+and start server
+232
+237- 
+ansible-playbook deploy-docker.yaml
+
+240 
+ansible-inventory -i inventory_aws_ec2.yaml --list
+ansible-inventory -i inventory_aws_ec2.yaml --group
+ansible-playbook -i inventory_aws_ec2.yaml deploy-node.yaml
+
+242 install pip3
+install boto3
+pip3 install boto3
+pip3 install botocore (added on palybook )
+
+mkdir .aws
+cd /.aws
+vim credentials
+copie you credentials loccally
+
+
+
+
+
+
+
+  
